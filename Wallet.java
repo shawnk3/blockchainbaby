@@ -31,7 +31,7 @@ public class Wallet{
     }
     public float getBalance(){
         float total = 0;
-        for(Map.Entry<String,TransactionOutput>item : Blockchain.UTXOs.entrySet()){
+        for(Map.Entry<String,TransactionOutput>item : PerniChain.UTXOs.entrySet()){
             TransactionOutput UTXO = item.getValue();
             if(UTXO.isMine(publicKey)){UTXOs.put(UTXO.id,UTXO); total+= UTXO.value;}
          

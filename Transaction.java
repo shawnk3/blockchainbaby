@@ -33,10 +33,10 @@ public class Transaction{
         //gather transaction input(check if unspent)
 
         for(TransactionInput X:inputs){
-                X.UTXO = Blockchain.UTXOs.get(i.transactionOutputId);
+                X.UTXO = PerniChain.UTXOs.get(i.transactionOutputId);
         }
         //check for valid transaction
-        if(getInputsValue()<Blockchain.minimumTransaction) { //both methods nonexistant
+        if(getInputsValue()<PerniChain.minimumTransaction) { //both methods nonexistant
             System.out.println("#Transaction Inputs to small:" + getInputsValue()); 
             return false;
         }
@@ -48,13 +48,13 @@ public class Transaction{
         outputs.add(new TransactionOutput(this.sender,leftOver,transactionId));  //send "change" back to sender
         //add outputs to Unspent list 
         for(TransactionOutput Y: outputs){
-            Blockchain.UXTOs.put(Y.id,Y);    
+            PerniChain.UXTOs.put(Y.id,Y);    
         }
         //remove transaction from UTXO list
         for(TransactionInput X: inputs){
             if(X.UTXO == null) continue;//skip it if not found
             
-            Blockchain.UTXOs.remove(X.UTXO.id);
+            PerniChain.UTXOs.remove(X.UTXO.id);
         }
 
         }
@@ -86,7 +86,7 @@ public class Transaction{
     }
     public boolean verifySignature(){
         String data= StringUtil.getStringfromKey(sender) + StringUtil.getStringfromKey(receiver)+ Float.toString(value);
-            return StringUtil.verifySignature(sender,data,signature);   
+        return StringUtil.verifySignature(sender,data,signature);   
     }
 }
 
