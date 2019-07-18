@@ -54,7 +54,7 @@ public class Wallet{
             if(total > value) break;
         }
         Transaction newTransaction = new Transaction(_recipient,value,inputs,publicKey);
-        newTransaction.generateSignature(privateKey);
+        newTransaction.generateSig(privateKey);
 
         for(TransactionInput X: inputs){
                 UTXOs.remove(X.TransactionOutputId);

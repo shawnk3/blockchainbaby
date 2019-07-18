@@ -7,4 +7,7 @@ public class TransactionInput {
     public TransactionInput(String TransactionOutputID){
         this.TransactionOutputID = TransactionOutputID;
     }
+    public String getID(){
+        return this.TransactionOutputID;
+    }
 }
