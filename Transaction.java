@@ -22,7 +22,7 @@ public class Transaction{
             return StringUtil.applySha256(StringUtil.getStringfromKey(sender)
             + StringUtil.getStringfromKey(receiver)
         + Float.toString(value) + counter);
-    }
+    }   
 
     public boolean processTransaction(){
 

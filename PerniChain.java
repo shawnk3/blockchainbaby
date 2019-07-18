@@ -1,6 +1,7 @@
 import java.security.Security;
 import java.util.Base64;  
-import com.google.gson.GsonBuilder;
+//import com.google.gson.GsonBuilder;
+
 
 public class PerniChain{
 
@@ -11,7 +12,7 @@ public class PerniChain{
      
      public static void main(String []args){
 
-            Security.addProvider( new org.bouncycastle.jce.provider.BouncyCastleProvider());
+           // Security.addProvider( new org.bouncycastle.jce.provider.BouncyCastleProvider());
 
             walletA = new Wallet();
             walletB = new Wallet();

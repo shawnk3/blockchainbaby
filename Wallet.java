@@ -21,7 +21,7 @@ public class Wallet{
             ECGenParameterSpec ecSpec = new ECGenParameterSpec("prime192v1");
             //initializes key and generates pair
             keyGen.initialize(ecSpec,random);
-            KeyPair keyPair = keyPair.generateKeyPair();
+            KeyPair keyPair = keyGen.generateKeyPair();
             //set public and private key
             privateKey = keyPair.getPrivate();
             publicKey = keyPair.getPublic();
@@ -31,7 +31,7 @@ public class Wallet{
     }
     public float getBalance(){
         float total = 0;
-        for(Map.Entry<String,TransactionOutput>item : PerniChain.UTXOs.entrySet()){
+        for(Map.Entry<String,TransactionOutput> item : this.UTXOs.entrySet()){
             TransactionOutput UTXO = item.getValue();
             if(UTXO.isMine(publicKey)){UTXOs.put(UTXO.id,UTXO); total+= UTXO.value;}
          
@@ -50,10 +50,10 @@ public class Wallet{
         for(Map.Entry<String,TransactionOutput> item: UTXOs.entrySet()){
             TransactionOutput UTXO = item.getValue();
             total += UTXO.value;
-            inputs.add(new Transaction(UTXO.id));
+            inputs.add(new TransactionInput(UTXO.id));
             if(total > value) break;
         }
-        Transaction newTransaction = new Transaction(publicKey,_recipient,value,inputs);
+        Transaction newTransaction = new Transaction(_recipient,value,inputs,publicKey);
         newTransaction.generateSignature(privateKey);
 
         for(TransactionInput X: inputs){
