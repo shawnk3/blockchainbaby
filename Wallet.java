@@ -57,7 +57,7 @@ public class Wallet{
         newTransaction.generateSig(privateKey);
 
         for(TransactionInput X: inputs){
-                UTXOs.remove(X.TransactionOutputId);
+                UTXOs.remove(X.getID());
         }
         return newTransaction;
     }
