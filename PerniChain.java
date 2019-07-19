@@ -9,6 +9,7 @@ public class PerniChain{
      public static Blockchain chain = new Blockchain(difficulty);
      public static Wallet walletA;
      public static Wallet walletB;
+     public static float minimumTransaction = 0.1f;
      public HashMap<String,TransactionOutput> UTXOs = new HashMap<String,TransactionOutput>();
      
      public static void main(String []args){
