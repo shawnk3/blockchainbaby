@@ -34,7 +34,7 @@ public class Transaction{
         //gather transaction input(check if unspent)
 
         for(TransactionInput X:inputs){
-                X.UTXO = PerniChain.UTXOs.get(i.transactionOutputId);
+                X.UTXO = PerniChain.UTXOs.get(X.getID());
         }
         //check for valid transaction
         if(getInputsValue()<PerniChain.minimumTransaction) { //both methods nonexistant
@@ -49,7 +49,7 @@ public class Transaction{
         outputs.add(new TransactionOutput(this.sender,leftOver,transactionId));  //send "change" back to sender
         //add outputs to Unspent list 
         for(TransactionOutput Y: outputs){
-            PerniChain.UXTOs.put(Y.id,Y);    
+            PerniChain.UTXOs.put(Y.id,Y);    
         }
         //remove transaction from UTXO list
         for(TransactionInput X: inputs){
@@ -64,7 +64,7 @@ public class Transaction{
     public float getInputsValue(){
         float total =0;
         for(TransactionInput X: inputs){
-            if(i.UTXO == null) continue;
+            if(X.UTXO == null) continue;
 
             total+= X.UTXO.value;
         }

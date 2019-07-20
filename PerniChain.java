@@ -1,5 +1,6 @@
 import java.security.Security;
 import java.util.Base64;  
+import java.util.*;
 //import com.google.gson.GsonBuilder;
 
 
@@ -10,7 +11,7 @@ public class PerniChain{
      public static Wallet walletA;
      public static Wallet walletB;
      public static float minimumTransaction = 0.1f;
-     public HashMap<String,TransactionOutput> UTXOs = new HashMap<String,TransactionOutput>();
+     public static HashMap<String,TransactionOutput> UTXOs = new HashMap<String,TransactionOutput>();
      
      public static void main(String []args){
 
