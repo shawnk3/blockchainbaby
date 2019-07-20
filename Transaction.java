@@ -7,7 +7,6 @@ public class Transaction{
     public static int counter =0; // value of transactions;
     public float value;
     public String transactionId;
-    public StringUtil tool = new StringUtil();
     public ArrayList<TransactionInput> inputs = new ArrayList<TransactionInput>();
     public ArrayList<TransactionOutput> outputs = new ArrayList<TransactionOutput>();
 
@@ -20,8 +19,8 @@ public class Transaction{
     }
     //creates hash used as TransactionId
     private String calculateHash(){counter++;
-            return tool.applySha256(tool.getStringfromKey(sender)
-            + tool.getStringfromKey(receiver)
+            return StringUtil.applySha256(StringUtil.getStringfromKey(sender)
+            + StringUtil.getStringfromKey(receiver)
         + Float.toString(value) + counter);
     }   
 
@@ -82,12 +81,12 @@ public class Transaction{
     }
 
     public void generateSig(PrivateKey key){
-        String data = tool.getStringfromKey(sender) + tool.getStringfromKey(receiver) + Float.toString(value);
-        signature = tool.applySignature(key,data);
+        String data = StringUtil.getStringfromKey(sender) + StringUtil.getStringfromKey(receiver) + Float.toString(value);
+        signature = StringUtil.applySignature(key,data);
     }
     public boolean verifySignature(){
-        String data= tool.getStringfromKey(sender) + tool.getStringfromKey(receiver)+ Float.toString(value);
-        return tool.verifySignature(sender,data,signature);   
+        String data= StringUtil.getStringfromKey(sender) + StringUtil.getStringfromKey(receiver)+ Float.toString(value);
+        return StringUtil.verifySignature(sender,data,signature);   
     }
 }
 
