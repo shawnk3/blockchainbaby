@@ -1,9 +1,7 @@
 import java.security.*;
 import java.util.Base64;
 
-public class StringUtil {
-
-    public StringUtil(){}
+ class StringUtil {
 
     public static byte[] applySignature(PrivateKey key, String input){
         Signature dsa;
