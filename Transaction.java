@@ -7,6 +7,7 @@ public class Transaction{
     public static int counter =0; // value of transactions;
     public float value;
     public String transactionId;
+    public byte [] signature;
     public ArrayList<TransactionInput> inputs = new ArrayList<TransactionInput>();
     public ArrayList<TransactionOutput> outputs = new ArrayList<TransactionOutput>();
 
@@ -19,8 +20,8 @@ public class Transaction{
     }
     //creates hash used as TransactionId
     private String calculateHash(){counter++;
-            return StringUtil.applySha256(StringUtil.getStringfromKey(sender)
-            + StringUtil.getStringfromKey(receiver)
+            return StringUtil.applySha256(StringUtil.getStringFromKey(sender)
+            + StringUtil.getStringFromKey(receiver)
         + Float.toString(value) + counter);
     }   
 
@@ -56,7 +57,7 @@ public class Transaction{
             
             PerniChain.UTXOs.remove(X.UTXO.id);
         }
-
+      return true;
         }
 
     //return sum of UTXO list inputs
@@ -81,12 +82,12 @@ public class Transaction{
     }
 
     public void generateSig(PrivateKey key){
-        String data = StringUtil.getStringfromKey(sender) + StringUtil.getStringfromKey(receiver) + Float.toString(value);
+        String data = StringUtil.getStringFromKey(sender) + StringUtil.getStringFromKey(receiver) + Float.toString(value);
         signature = StringUtil.applySignature(key,data);
     }
     public boolean verifySignature(){
-        String data= StringUtil.getStringfromKey(sender) + StringUtil.getStringfromKey(receiver)+ Float.toString(value);
-        return StringUtil.verifySignature(sender,data,signature);   
+        String data= StringUtil.getStringFromKey(sender) + StringUtil.getStringFromKey(receiver)+ Float.toString(value);
+        return StringUtil.verifySig(sender,data,signature);   
     }
 }
 

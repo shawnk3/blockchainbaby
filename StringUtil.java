@@ -30,7 +30,7 @@ import java.util.Base64;
         }
     }
     public static String getStringFromKey(Key key){
-        return Base64.getEncoder().encodeToString(key.getEncoded());
+    return Base64.getEncoder().encodeToString(key.getEncoded());
     }
      public static String applySha256(String base) {
         try{
