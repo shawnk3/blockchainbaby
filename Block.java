@@ -8,7 +8,7 @@ public class Block {
   private long timestamp;
   private String hash;
   private String previousHash;
-  private String data;
+  private String data; //list of 10 transactions
   private int nonce;
   private ArrayList<Transaction>transactions = new ArrayList<Transaction>();
   

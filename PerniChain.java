@@ -45,6 +45,8 @@ public class PerniChain{
             System.out.println("\nWallet A balance:" + walletA.getBalance());
             System.out.println("\nWallet B balance:" + walletB.getBalance());
             
+            //block 2 test
+            
             
            System.out.println( "Is chain valid:" + chain.isBlockChainValid());
             
