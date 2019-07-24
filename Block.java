@@ -1,7 +1,7 @@
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Date;
-
+import java.util.ArrayList;
 public class Block {
 
   private int index;
@@ -10,6 +10,8 @@ public class Block {
   private String previousHash;
   private String data;
   private int nonce;
+  private ArrayList<Transaction>transactions = new ArrayList<Transaction>();
+  
 
   public Block(int index, long timestamp, String previousHash, String data) {
     this.index = index;
@@ -18,7 +20,7 @@ public class Block {
     this.data = data;
     nonce = 0;
     hash = Block.calculateHash(this);
-  }
+  }	
 
   public int getIndex() {
     return index;
@@ -51,8 +53,8 @@ public class Block {
     append("hash: ").append(hash).append("]");
     return builder.toString();
   }
-
-  public static String calculateHash(Block block) {
+  //merkle root needs to be added
+	  public static String calculateHash(Block block) {
     if (block != null) {
       MessageDigest digest = null;
 
@@ -90,5 +92,18 @@ public class Block {
        hash = Block.calculateHash(this);
      }
   }
-
+   public boolean addTransaction(Transaction transaction) {
+	   //if genesis block it ignores, else processes transaction
+	   if(transaction == null)return false;
+	   if(previousHash!="0") {
+		   if(transaction.processTransaction() != true) {
+			   System.out.println("Transaction failed to process. Discarded.");
+			   return false;
+		   }
+	   }
+	   this.transactions.add(transaction);
+	   System.out.println("Transaction successfully added to Block");
+	   return true;
+   }
+   
 }

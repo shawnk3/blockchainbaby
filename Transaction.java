@@ -24,7 +24,13 @@ public class Transaction{
             + StringUtil.getStringFromKey(receiver)
         + Float.toString(value) + counter);
     }   
-
+    public String getID() {
+    	return this.transactionId;
+    }
+    public void setID(String transactionId) {
+    	String ID = this.transactionId;
+    	this.transactionId = transactionId;
+     }
     public boolean processTransaction(){
 
         if(verifySignature() == false){
@@ -89,6 +95,28 @@ public class Transaction{
         String data= StringUtil.getStringFromKey(sender) + StringUtil.getStringFromKey(receiver)+ Float.toString(value);
         return StringUtil.verifySig(sender,data,signature);   
     }
+    
+    //Pins array of transactions and returns merkleroot = mother hash of all hashes of transactions
+    
+    public static String getMerkleRoot(ArrayList<Transaction> transactions) {
+    	int count = transactions.size();
+    	ArrayList<String> previousTreeLayer = new ArrayList<String>();
+    	for(Transaction X: transactions) {
+    		previousTreeLayer.add(X.getID());
+    	}
+    	ArrayList<String> TreeLayer = previousTreeLayer;
+    	while(count>1) {
+    		TreeLayer = new ArrayList<String>();
+    		for(int i=1 ; i< previousTreeLayer.size();i++) {
+    			TreeLayer.add(StringUtil.applySha256(previousTreeLayer.get(i-1)+ previousTreeLayer.get(i)));
+    		}
+    		count = TreeLayer.size();
+    		previousTreeLayer= TreeLayer;
+    	}
+    	String merkleRoot = (TreeLayer.size() == 1)? TreeLayer.get(0): "";
+    return merkleRoot;
+    }
+    
 }
 
 
