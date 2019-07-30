@@ -18,6 +18,7 @@ public class Transaction{
         this.value = value;
         this.inputs = inputs;
     }
+    
     //creates hash used as TransactionId
     private String calculateHash(){counter++;
             return StringUtil.applySha256(StringUtil.getStringFromKey(sender)
@@ -86,7 +87,8 @@ public class Transaction{
         }
         return total;
     }
-
+public ArrayList<TransactionInput> getInputs(){return this.inputs;}
+public ArrayList<TransactionOutput>getOutputs(){return this.outputs;}
     public void generateSig(PrivateKey key){
         String data = StringUtil.getStringFromKey(sender) + StringUtil.getStringFromKey(receiver) + Float.toString(value);
         signature = StringUtil.applySignature(key,data);
@@ -98,24 +100,7 @@ public class Transaction{
     
     //Pins array of transactions and returns merkleroot = mother hash of all hashes of transactions
     
-    public static String getMerkleRoot(ArrayList<Transaction> transactions) {
-    	int count = transactions.size();
-    	ArrayList<String> previousTreeLayer = new ArrayList<String>();
-    	for(Transaction X: transactions) {
-    		previousTreeLayer.add(X.getID());
-    	}
-    	ArrayList<String> TreeLayer = previousTreeLayer;
-    	while(count>1) {
-    		TreeLayer = new ArrayList<String>();
-    		for(int i=1 ; i< previousTreeLayer.size();i++) {
-    			TreeLayer.add(StringUtil.applySha256(previousTreeLayer.get(i-1)+ previousTreeLayer.get(i)));
-    		}
-    		count = TreeLayer.size();
-    		previousTreeLayer= TreeLayer;
-    	}
-    	String merkleRoot = (TreeLayer.size() == 1)? TreeLayer.get(0): "";
-    return merkleRoot;
-    }
+  
     
 }
 

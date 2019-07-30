@@ -1,4 +1,5 @@
 import java.security.*;
+import java.util.ArrayList;
 import java.util.Base64;
 
  class StringUtil {
@@ -50,5 +51,22 @@ import java.util.Base64;
         }
     }
 
-
+     public static String getMerkleRoot(ArrayList<Transaction> transactions) {
+     	int count = transactions.size();
+     	ArrayList<String> previousTreeLayer = new ArrayList<String>();
+     	for(Transaction X: transactions) {
+     		previousTreeLayer.add(X.getID());
+     	}
+     	ArrayList<String> TreeLayer = previousTreeLayer;
+     	while(count>1) {
+     		TreeLayer = new ArrayList<String>();
+     		for(int i=1 ; i< previousTreeLayer.size();i++) {
+     			TreeLayer.add(StringUtil.applySha256(previousTreeLayer.get(i-1)+ previousTreeLayer.get(i)));
+     		}
+     		count = TreeLayer.size();
+     		previousTreeLayer= TreeLayer;
+     	}
+     	String merkleRoot = (TreeLayer.size() == 1)? TreeLayer.get(0): "";
+     return merkleRoot;
+     }
 }

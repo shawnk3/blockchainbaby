@@ -1,6 +1,5 @@
 import java.util.ArrayList;
-import java.util.List;
-
+import java.util.*;
 public class Blockchain {
 
   private int difficulty;
@@ -14,7 +13,10 @@ public class Blockchain {
     b.mineBlock(difficulty);
     blocks.add(b);
   }
-
+  	
+  public int size() {return this.blocks.size();}
+  public Block get(int i) { return this.blocks.get(i);}
+  
   public int getDifficulty() {
     return difficulty;
   }
@@ -62,12 +64,12 @@ public class Blockchain {
       }
 
       if (newBlock.getPreviousHash() == null  ||
-	    !newBlock.getPreviousHash().equals(previousBlock.getHash())) {
+	    (!newBlock.getPreviousHash().equals(previousBlock.getHash()))) {
         return false;
       }
 
       if (newBlock.getHash() == null  ||
-	    !Block.calculateHash(newBlock).equals(newBlock.getHash())) {
+	    (!Block.calculateHash(newBlock).equals(newBlock.getHash()))) {
         return false;
       }
 
@@ -93,7 +95,8 @@ public class Blockchain {
 
     return true;
   }
-
+ 
+ 
   public String toString() {
     StringBuilder builder = new StringBuilder();
 

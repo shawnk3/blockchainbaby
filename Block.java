@@ -2,6 +2,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Date;
 import java.util.ArrayList;
+import java.util.*;
 public class Block {
 
   private int index;
@@ -11,7 +12,7 @@ public class Block {
   private String data; //list of 10 transactions
   private int nonce;
   private ArrayList<Transaction>transactions = new ArrayList<Transaction>();
-  
+  private String merkleroot;
 
   public Block(int index, long timestamp, String previousHash, String data) {
     this.index = index;
@@ -21,11 +22,12 @@ public class Block {
     nonce = 0;
     hash = Block.calculateHash(this);
   }	
-
+  public ArrayList<Transaction> getTransactions(){ return this.transactions;}
+  public Transaction GenesisT() { return this.transactions.get(0);}
   public int getIndex() {
     return index;
   }
-
+  
   public long getTimestamp() {
     return timestamp;
   }
@@ -43,7 +45,7 @@ public class Block {
   }
 
   public String str() {
-    return index + timestamp + previousHash + data + nonce;
+    return index + timestamp + previousHash + data + nonce + merkleroot;
   }
 
   public String toString() {
@@ -54,7 +56,7 @@ public class Block {
     return builder.toString();
   }
   //merkle root needs to be added
-	  public static String calculateHash(Block block) {
+  public static String calculateHash(Block block) {
     if (block != null) {
       MessageDigest digest = null;
 
@@ -86,7 +88,7 @@ public class Block {
 
    public void mineBlock(int difficulty) {
      nonce = 0;
-
+     merkleroot = StringUtil.getMerkleRoot(transactions);
      while (!getHash().substring(0,  difficulty).equals(Utils.zeros(difficulty))) {
        nonce++;
        hash = Block.calculateHash(this);
